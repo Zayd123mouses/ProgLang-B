@@ -1,0 +1,32 @@
+
+#lang racket
+
+(provide (all-defined-out)) ;; so we can put tests in a second file
+(require rackunit)
+;; put your code below
+
+; int int int -> list of int
+; assume the last int is a positive
+;produce a list of int from low to high inclusive if possiable
+;(check-equal? (sequence  0 0 1) (list 0))
+;(check-equal?  (sequence 3 11 2) (list 11 9 7 5 3))
+;(check-equal?  (sequence 3 8 3) (list  6 3 ))
+;(check-equal?  (sequence 3 2 1) empty)
+
+
+;(check-expect  (sequence 0 5 1) (list 0 1 2 3 4 5) )
+(check-equal? (sequence 0 5 1) (list 0 1 2 3 4 5) "Sequence test")
+
+
+
+(define (sequence low high stride)
+  ;acc : context preserving accumulator
+  ;todo: worklist accumulator , all the valid numbers so far
+  (local [(define (sequence low high stride  todo)
+            (if (<= low  high)
+                (sequence (+ stride low) high stride (cons low todo))
+                todo))]
+     
+    (sequence low high stride empty)))
+
+         
